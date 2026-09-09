@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# project artifacts
+data/
+tokenizer/
+checkpoints/
+*.pt
+*.model
+*.vocab
+spm_train.txt
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

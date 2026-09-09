@@ -1,0 +1,10 @@
+# stuff we need for this Urdu question generation project
+torch>=2.0.0
+datasets>=2.14.0
+sentencepiece>=0.1.99
+flask>=3.0.0
+nltk>=3.8.0
+tqdm>=4.66.0
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0

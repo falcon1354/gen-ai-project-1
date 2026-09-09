@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Urdu Question Generator</title>
+  <style>
+    :root {
+      --bg: #f3efe6;
+      --ink: #1f2a24;
+      --card: #fffdf8;
+      --accent: #0f6b4c;
+      --line: #d7d0c3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Nastaliq Urdu", "Segoe UI", Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at top right, #e7f2ec 0%, transparent 40%),
+        linear-gradient(180deg, #f7f3ea, #efe8da);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 3rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin: 0 0 0.4rem;
+      color: var(--accent);
+    }
+    .sub {
+      margin: 0 0 1.5rem;
+      opacity: 0.85;
+      font-size: 0.95rem;
+    }
+    form {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+    textarea, input[type="text"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.8rem 0.9rem;
+      font: inherit;
+      background: #fff;
+      margin-bottom: 1rem;
+      direction: rtl;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    button {
+      background: var(--accent);
+      color: white;
+      border: 0;
+      border-radius: 999px;
+      padding: 0.7rem 1.4rem;
+      font: inherit;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.05); }
+    .error {
+      margin-top: 1rem;
+      padding: 0.8rem 1rem;
+      background: #fde8e8;
+      border-radius: 10px;
+      color: #8a1f1f;
+    }
+    .result {
+      margin-top: 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+    }
+    .result h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.15rem;
+    }
+    .block {
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px dashed var(--line);
+    }
+    .block:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+    .label {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-bottom: 0.25rem;
+    }
+    .text { font-size: 1.15rem; line-height: 2; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>اردو سوال جنریٹر</h1>
+    <p class="sub">Urdu Sentence → mark the answer → get greedy &amp; beam questions</p>
+
+    <form method="POST">
+      <label for="sentence">Urdu Sentence</label>
+      <textarea id="sentence" name="sentence" placeholder="پاکستان کا سب سے بڑا دریا دریائے سندھ ہے۔" required>{{ sentence }}</textarea>
+
+      <label for="answer">Answer (exact text from the sentence)</label>
+      <input id="answer" type="text" name="answer" placeholder="دریائے سندھ" value="{{ answer }}" required />
+
+      <button type="submit">Generate Question</button>
+    </form>
+
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if result %}
+    <div class="result">
+      <h2>Results</h2>
+      <div class="block">
+        <div class="label">Model input (with &lt;ans&gt; tags)</div>
+        <div class="text">{{ result.source }}</div>
+      </div>
+      <div class="block">
+        <div class="label">Greedy decoding</div>
+        <div class="text">{{ result.greedy }}</div>
+      </div>
+      <div class="block">
+        <div class="label">Beam search</div>
+        <div class="text">{{ result.beam }}</div>
+      </div>
+    </div>
+    {% endif %}
+  </main>
+</body>
+</html>
